@@ -16,15 +16,7 @@ class CarController {
   }
 
   public async insertCar() {
-    const car: ICar = {
-      model: this.req.body.model,
-      year: this.req.body.year,
-      color: this.req.body.color,
-      status: this.req.body.status,
-      buyValue: this.req.body.buyValue,
-      doorsQty: this.req.body.doorsQty,
-      seatsQty: this.req.body.seatsQty,
-    };
+    const car: ICar = this.req.body;
     
     try {
       const newCar = await this.service.insertCar(car);
