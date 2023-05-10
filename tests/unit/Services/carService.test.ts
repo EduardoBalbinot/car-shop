@@ -26,7 +26,7 @@ const output: Car = new Car({
   seatsQty: 5,
 });
 
-describe('Testa o service do car', function () {
+describe('Testa a camada service de car', function () {
   afterEach(function () {
     sinon.restore();
   }); 
@@ -38,6 +38,15 @@ describe('Testa o service do car', function () {
     expect(result).to.be.deep.equal(output);
   });
 
+  it('busca todos os carros', async function () {
+    const manyCarsOutput = [{ ...output }, { ...output }];
+    sinon.stub(Model, 'find').resolves(manyCarsOutput);
+
+    const service = new CarService();
+    const result = await service.getCars();
+    expect(result).to.be.deep.equal(manyCarsOutput);
+  });
+
   it('buscando um carro com id invalido', async function () {
     sinon.stub(Model, 'findById').resolves(output);
 
@@ -47,6 +56,14 @@ describe('Testa o service do car', function () {
     } catch (error) {
       expect((error as Error).message).to.be.equal('Invalid mongo id');
     }
+  });
+
+  it('buscando um carro que não existe', async function () {
+    sinon.stub(Model, 'findById').resolves(null);
+
+    const service = new CarService();
+    const response = await service.getCarById('644a76b413b85a4facd8d42e');
+    expect(response).to.equal(null);
   });
 
   it('inserindo um carro com sucesso', async function () {
