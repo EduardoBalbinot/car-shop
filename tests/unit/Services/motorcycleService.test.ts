@@ -55,7 +55,7 @@ describe('Testa a camada service de motorcycle', function () {
     expect(result).to.be.deep.equal(manyMotorcyclesOutput);
   });
 
-  it('buscando uma motocicleta que não existe', async function () {
+  it('buscando uma motocicleta que não existe!', async function () {
     sinon.stub(Model, 'findById').resolves(null);
 
     const service = new MotorcycleService();
