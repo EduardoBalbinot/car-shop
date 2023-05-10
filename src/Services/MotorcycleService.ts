@@ -16,6 +16,20 @@ class MotorcycleService {
     const motorcycle = this.createMotorcycleDomain(response);
     return motorcycle;
   }
+
+  public async getMotorcycles() {
+    const motorcycleODM = new MotorcycleODM();
+    const cars = await motorcycleODM.getAll();
+    const domainMotorcycles = cars.map((m) => this.createMotorcycleDomain(m));
+    return domainMotorcycles;
+  }
+
+  public async getMotorcycleById(id: string) {
+    const motorcycleODM = new MotorcycleODM();
+    const motorcycle = await motorcycleODM.getById(id);
+    const domainMotorcycle = this.createMotorcycleDomain(motorcycle);
+    return domainMotorcycle;
+  }
 }
 
 export default MotorcycleService;
